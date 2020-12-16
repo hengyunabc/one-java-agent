@@ -15,7 +15,10 @@ jobs:
         with:
           java-version: ${{ matrix.java }} 
       - name: Build with Maven
-        run: mvn clean package
+        run: |
+          mvn clean package -DskipTests
+          ls /home/runner/work/one-java-agent/one-java-agent/one-java-agent/target/test-classes/../../../dubbo-test-plugin/target/dubbo-test-plugin@0.0.1-SNAPSHOT
+          mvn test
 
   build_jdk_ge_12:
     runs-on: ubuntu-latest
@@ -40,4 +43,6 @@ jobs:
       - name: Build with Maven
         run: |
           source ~/.testenv
-          mvn -Dmaven.compiler.fork=true -Dmaven.compiler.executable=$JAVA8_HOME/bin/javac clean package
+          mvn -Dmaven.compiler.fork=true -Dmaven.compiler.executable=$JAVA8_HOME/bin/javac clean package -DskipTests
+          ls /home/runner/work/one-java-agent/one-java-agent/one-java-agent/target/test-classes/../../../dubbo-test-plugin/target/dubbo-test-plugin@0.0.1-SNAPSHOT
+          mvn -Dmaven.compiler.fork=true -Dmaven.compiler.executable=$JAVA8_HOME/bin/javac test
